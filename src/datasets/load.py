@@ -35,6 +35,7 @@ from .builder import DatasetBuilder
 from .dataset_dict import DatasetDict
 from .features import Features
 from .filesystems import extract_path_from_uri, is_remote_filesystem
+from .info import DATASET_INFOS_DICT_FILE_NAME
 from .metric import Metric
 from .packaged_modules import _PACKAGED_DATASETS_MODULES, hash_python_lines
 from .splits import Split
@@ -394,7 +395,7 @@ def prepare_module(
     # 2. copy from the local file system inside the modules cache to import it
 
     base_path = url_or_path_parent(file_path)  # remove the filename
-    dataset_infos = url_or_path_join(base_path, config.DATASETDICT_INFOS_FILENAME)
+    dataset_infos = url_or_path_join(base_path, DATASET_INFOS_DICT_FILE_NAME)
 
     # Download the dataset infos file if available
     try:
@@ -461,7 +462,7 @@ def prepare_module(
         hash_folder_path = force_local_path
 
     local_file_path = os.path.join(hash_folder_path, name)
-    dataset_infos_path = os.path.join(hash_folder_path, config.DATASETDICT_INFOS_FILENAME)
+    dataset_infos_path = os.path.join(hash_folder_path, DATASET_INFOS_DICT_FILE_NAME)
 
     # Prevent parallel disk operations
     lock_path = local_path + ".lock"
